@@ -1,4 +1,4 @@
-from flast import Flask
+from flask import Flask
 
 app = Flast(__name__)
 
