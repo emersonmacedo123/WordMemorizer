@@ -10,6 +10,13 @@ Para registar este Activity Provider na plataforma, utilize os seguintes endpoin
 | **Lista de Analytics** | `GET` | `/analytics-list` |
 | **Dados de Analytics** | `POST` | `/analytics-data` |
 
+Para analytics_data deve informar no post qual o activityID como por exempolo:
+```json
+
+{
+    "activityID": "instancia_turma_A"
+}
+```
 ### 📄 JSON de Registo Completo
 
 Copie o conteúdo abaixo para registar a atividade:
