@@ -17,9 +17,9 @@ Copie o conteúdo abaixo para registar a atividade:
 ```json
 {
   "name": "WordMemorizer Game",
-  "config_url": "[https://seu-app-no-render.com/config](https://seu-app-no-render.com/config)",
-  "json_params_url": "[https://seu-app-no-render.com/json-params](https://seu-app-no-render.com/json-params)",
-  "user_url": "[https://seu-app-no-render.com/deploy](https://seu-app-no-render.com/deploy)",
-  "analytics_url": "[https://seu-app-no-render.com/analytics-data](https://seu-app-no-render.com/analytics-data)",
-  "analytics_list_url": "[https://seu-app-no-render.com/analytics-list](https://seu-app-no-render.com/analytics-list)"
+  "config_url": "https://wordmemorizer.onrender.com/config",
+  "json_params_url": "https://wordmemorizer.onrender.com/json-params",
+  "user_url": "https://wordmemorizer.onrender.com/deploy",
+  "analytics_url": "https://wordmemorizer.onrender.com/analytics-data",
+  "analytics_list_url": "https://wordmemorizer.onrender.com/analytics-list"
 }
