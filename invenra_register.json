@@ -1,0 +1,8 @@
+{
+  "name": "WordMemorizer Game",
+  "config_url": "https://wordmemorizer.onrender.com/config",
+  "json_params_url": "https://wordmemorizer.onrender.com/json-params",
+  "user_url": "https://wordmemorizer.onrender.com/deploy",
+  "analytics_url": "https://wordmemorizer.onrender.com/analytics-data",
+  "analytics_list_url": "https://wordmemorizer.onrender.com/analytics-list"
+}
