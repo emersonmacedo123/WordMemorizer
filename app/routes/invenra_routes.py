@@ -1,13 +1,14 @@
 """
 Rotas relacionadas à integração com Inven!RA
+Utiliza o padrão FACADE para simplificar a interface
 """
 from flask import Blueprint, jsonify, request
-from app.services.analytics_service import AnalyticsService
+from app.facades.invenira_facade import InveniraFacade
 
 bp = Blueprint('invenra', __name__)
 
-# Instância do serviço de analytics
-analytics_service = AnalyticsService()
+# Instância da FACADE - ponto único de entrada para operações Inven!RA
+invenira_facade = InveniraFacade()
 
 @bp.route('/')
 def home():
@@ -17,70 +18,45 @@ def home():
 def config_page():
     """
     Página de configuração da atividade
+    Delegada à Facade
     """
-    return """
-    <!DOCTYPE html>
-    <html><body>
-    <h2>Configuração do WordMemorizer</h2>
-    <form>
-        <label>Tema do Deck:</label><br>
-        <input type="text" id="tema" name="tema" value="Cores em Alemão"><br><br>
-        
-        <input type="hidden" name="deck_id" value="deck_123_exemplo">
-        
-        <p><em>(Ao salvar, o ID 'deck_123_exemplo' será enviado à Inven!RA)</em></p>
-    </form>
-    </body></html>
-    """
+    return invenira_facade.get_configuration_page()
 
 @bp.route('/json-params', methods=['GET'])
 def json_params():
     """
     Define quais parâmetros a Inven!RA deve ler
+    Delegada à Facade
     """
-    return jsonify([
-        {"name": "deck_id", "type": "text/plain"}
-    ])
+    return jsonify(invenira_facade.get_json_parameters())
 
 @bp.route('/deploy', methods=['GET', 'POST'])
 def deploy_activity():
     """
     Retorna a URL de entrada da atividade para a Inven!RA
+    Delegada à Facade
     """
-    base_url = request.host_url.rstrip('/')
-    return f"{base_url}/game/entry"
+    base_url = request.host_url
+    return invenira_facade.get_game_entry_url(base_url)
 
 @bp.route('/analytics-list', methods=['GET'])
 def analytics_list():
     """
     Lista as métricas disponíveis
+    Delegada à Facade
     """
-    return jsonify({
-        "quantAnalytics": [
-            {"name": "tempo_jogado", "type": "integer"},
-            {"name": "palavras_aprendidas", "type": "integer"}
-        ],
-        "qualAnalytics": [
-            {"name": "feedback_professor", "type": "text/plain"}
-        ]
-    })
+    return jsonify(invenira_facade.get_analytics_list())
 
 @bp.route('/analytics-data', methods=['POST'])
 def analytics_data():
     """
     Retorna os dados de analytics para uma atividade
+    Delegada à Facade - toda a lógica de validação e processamento está encapsulada
     """
     # Captura os dados enviados pela Inven!RA
     data = request.get_json()
     
-    # Validação básica
-    if not data or 'activityID' not in data:
-        return jsonify({"error": "Bad Request: activityID is missing"}), 400
-        
-    activity_id = data['activityID']
-    print(f"--> Recebido pedido de analytics para a atividade: {activity_id}")
-
-    # Usa o serviço para buscar e processar os dados
-    response_list = analytics_service.get_analytics_for_activity(activity_id)
+    # A Facade coordena: validação + busca + processamento
+    success, result, status_code = invenira_facade.handle_analytics_request(data)
     
-    return jsonify(response_list)
+    return jsonify(result), status_code
