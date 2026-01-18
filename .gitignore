@@ -1,0 +1,19 @@
+# Python cache
+__python_cache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# virtual environment
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod] 
